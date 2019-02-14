@@ -1,0 +1,5 @@
+import requests
+def getAvailableMovies():
+	parsed_movies={}
+	res = requests.get('https://in.bookmyshow.com/hyderabad/movies')
+	print(res.status_code)

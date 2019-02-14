@@ -1,0 +1,86 @@
+BEGIN TRANSACTION;
+
+/* Create a table called NAMES */
+create table professor(
+    id int,
+    name varchar(80),
+    department_id int,
+    salary numeric
+    );
+   
+insert into professor values (1,'shawn',1,22606);
+insert into professor values (8,'ruth',3,3000);
+insert into professor values (9,'micheal',4,3500);
+insert into professor values (2,'craig',5,7000);
+insert into professor values (10,'terry',1,5000);
+insert into professor values (3,'jake peralta',2,2000);
+insert into professor values (4,'gina',1,5500);
+insert into professor values (7,'holt',1,2500);
+insert into professor values (5,'amy',3,7500);
+insert into professor values (6,'boyle',5,1500);
+
+
+--select * from professor;
+
+create table department(
+    id int,
+    name varchar(80)
+    );
+insert into department values(3,'biological sciences');    
+insert into department values(5,'technology');  
+insert into department values(6,'humanities');  
+insert into department values(2,'clinical medicine');  
+insert into department values(4,'arts');  
+insert into department values(1,'physical sciences');  
+
+--select * from department;
+commit;
+
+select department_id, avg(salary) as avg_salary
+from professor
+group by department_id;
+
+select max(t1.avg_salary) from (select department_id, avg(salary) as avg_salary
+from professor
+group by department_id)as t1;
+
+-- highest avg salary of a department on professor
+select d.name,avg(salary) as average_sal
+from professor p left join department d
+on d.id=p.department_id
+group by d.name
+having average_sal in
+(select max(t1.avg_salary) from (select department_id, avg(salary) as avg_salary
+from professor
+group by department_id)as t1);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
